@@ -51,7 +51,7 @@ var seven_Seg_G = new Gpio(5, 'out');
 var bar_Light_1 = new Gpio(23, 'out');
 var bar_Light_2 = new Gpio(14, 'out');
 var bar_Light_3 = new Gpio(24, 'out');
-var bar_Light_4 = new Gpio(18, 'out'); //17
+var bar_Light_4 = new Gpio(18, 'out');
 var bar_Light_5 = new Gpio(22, 'out');
 var bar_Light_6 = new Gpio(15, 'out');
 var bar_Light_7 = new Gpio(27, 'out');
@@ -68,7 +68,6 @@ seven_Seg_1.write(0);
 seven_Seg_2.write(0);
 
 var timeOfOn = 0;
-var updatedDigit = 0;
 var changeToDisplay = false;
 var seven_Seg_1_Control = false;
 var seven_Seg_2_Control = false;
@@ -77,31 +76,28 @@ var seven_Seg_2_Control = false;
 var setDigit = setInterval(digitClk, 10);
 
 function digitClk(){
-	//console.log("123", digitToDisplay);
-	//for(var i = 0; i < 1000; i++){
-		seven_Seg_A.write(1);
-		seven_Seg_B.write(1);
-		seven_Seg_C.write(1);
-		seven_Seg_D.write(1);
-		seven_Seg_E.write(1);
-		seven_Seg_F.write(1);
-		seven_Seg_G.write(1);
+	seven_Seg_A.write(1);
+	seven_Seg_B.write(1);
+	seven_Seg_C.write(1);
+	seven_Seg_D.write(1);
+	seven_Seg_E.write(1);
+	seven_Seg_F.write(1);
+	seven_Seg_G.write(1);
 
-		if(seven_Seg_1_Control == true){
-			seven_Seg_1_Control = false;
-			seven_Seg_2_Control = true;
-			seven_Seg_1.write(0);
-			seven_Seg_2.write(1);
-		}
-		else{
-			seven_Seg_1_Control = true;
-			seven_Seg_2_Control = false;
-			seven_Seg_1.write(1);
-			seven_Seg_2.write(0);
-		}
+	if(seven_Seg_1_Control == true){
+		seven_Seg_1_Control = false;
+		seven_Seg_2_Control = true;
+		seven_Seg_1.write(0);
+		seven_Seg_2.write(1);
+	}
+	else{
+		seven_Seg_1_Control = true;
+		seven_Seg_2_Control = false;
+		seven_Seg_1.write(1);
+		seven_Seg_2.write(0);
+	}
 
-		setDisplay(digitToDisplay);
-//	}
+	setDisplay(digitToDisplay);
 }
 
 //var segdigitinterval = setInterval(flashLightBar, 80);
