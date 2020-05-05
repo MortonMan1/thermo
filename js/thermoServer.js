@@ -77,8 +77,74 @@ function pinCounter1() {
 
   numberToShow++;
 }
+/*
+TODO: sort out API calls to website.
+*/
+var newCalltimer = setInterval(callserver2, 10000);
 
-//var newCalltimer = setInterval(callserver, 2000);
+const axios = require('axios')
+
+
+function callserver2(){
+
+  console.log("here we call the axios");
+
+  /*axios.get('http://192.168.0.28:58938/api/thermo/getTest')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+  //#endregion
+  
+  
+  
+        Temperature { get; set; }
+        public int TimeOn { get; set; }
+        public int LastUpdated
+  */
+
+  //get temp and deets
+
+  var data = myModule.statusToPost();
+
+  const obj = JSON.stringify(data);
+
+  //console.log(data);
+  //console.log(obj);
+
+  axios({
+    method: 'post',
+    url: 'http://192.168.0.28:58938/api/thermo/',
+    data: data,
+    }).then((res) => {
+      console.log(`statusCode: ${res.statusCode}`)
+      console.log(res)
+    })
+    .catch((error) => {
+      console.error(error)
+    });
+
+
+  /*axios.post('http://192.168.0.28:58938/api/thermo/', {
+    Temperature: data.Temperature,
+		TimeOn: data.TimeOn,
+		LastUpdated: data.LastUpdated
+  })
+  .then((res) => {
+    console.log(`statusCode: ${res.statusCode}`)
+    console.log(res)
+  })
+  .catch((error) => {
+    console.error(error)
+  })*/
+}
 
 function callserver(){
   const data = JSON.stringify({

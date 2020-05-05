@@ -66,6 +66,7 @@ var pushButton = new Gpio(17, 'in', 'both'); //use GPIO pin 17 as input, and 'bo
 
 seven_Seg_1.write(0);
 seven_Seg_2.write(0);
+heatingPin.write(1);
 
 var timeOfOn = 0;
 var changeToDisplay = false;
@@ -101,7 +102,6 @@ function digitClk(){
 }
 
 //var segdigitinterval = setInterval(flashLightBar, 80);
-//console.log("wok");
 bar_Light_1.writeSync(1);
 bar_Light_2.writeSync(1);
 bar_Light_3.writeSync(1);
@@ -114,7 +114,6 @@ bar_Light_8.writeSync(1);
 var count8 = 0;
 function flashLightBar() {
 
-	//console.log("wok");
 	bar_Light_1.writeSync(0);
 	bar_Light_2.writeSync(0);
 	bar_Light_3.writeSync(0);
@@ -227,21 +226,26 @@ var turnHeatingOff = function(){
 }
 
 var getHeatingStatus = function(){
-	//var nowDate = moment();
-
-	//console.log(nowDate);
 	if (heatingPin.readSync() === 0) {
-		//module.exports.turnHeatingOn();
-		//turnHeatingOn();
 		return { 
 			message: 'Heating is ON.',
-			time: timeOfOn
+			time: timeOfOn,
+			temperature: digitToDisplay,
+			LastUpdated: 0
 		};  
 	} else {
-		//turnHeatingOff();
 		object = { message: 'Heating is OFF.' };  
 		return object;
 	}
+}
+
+var statusToPost = function(){
+	var data = {
+		Temperature: digitToDisplay,
+		TimeOn: timeOfOn,
+		LastUpdated: 0
+	};
+	return data;
 }
 
 var toggleHeating = function() {
@@ -289,7 +293,8 @@ module.exports = {
 	turnHeatingOn,
 	turnHeatingOff, 
 	stopOnTimer2,
-	setDigit
+	setDigit,
+	statusToPost
 }
 	
 
